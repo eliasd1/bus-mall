@@ -25,3 +25,9 @@ h1{
 ul{
     margin:20px;
 }
+
+#myCanvas{
+    display: inline
+    width:20%;
+    height:10%;   
+}
