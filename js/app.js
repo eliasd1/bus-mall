@@ -8,8 +8,16 @@ var numofImages = 3;
 var div = document.getElementById("imageList")
 var button = document.getElementById("results")
 var ul = document.getElementById("resultList")
-var ctx = document.getElementById("myCanvas").getContext("2d")
+var canvas = document.getElementById("myCanvas")
+var ctx = canvas.getContext("2d")
 var jpgs = ["bag", "banana", "bathroom", "boots", "breakfast", "bubblegum", "chair", "cthulhu", "dog-duck", "dragon", "pen", "pet-sweep", "scissors", "shark", "tauntaun", "unicorn", "water-can", "wine-glass"]
+function CreateProduct(name, path){
+    this.name = name;
+    this.path = path;
+    this.timesShown = 0;
+    this.count = 0;
+    objects.push(this)
+}
 for(let i = 0; i<jpgs.length;i++){
     new CreateProduct(jpgs[i].replace("-", " "), "img/" + jpgs[i] + ".jpg")
 }
@@ -31,6 +39,7 @@ function showResults(){
     button.style.display = "none"
 }
 function showChart(){
+    canvas.style.display = "inline-block"
     new Chart(ctx, {
         // The type of chart we want to create
         type: 'bar',
@@ -42,6 +51,12 @@ function showChart(){
                 backgroundColor: 'blue',
                 borderColor: 'blue',
                 data: getValue("count")
+            },
+            {
+                label: 'Number of times shown',
+                backgroundColor: 'red',
+                borderColor: 'red',
+                data: getValue("timesShown")
             }]
         },
     
@@ -72,13 +87,7 @@ function changeImages(event){
         div.removeEventListener("click", changeImages)
     }
 }
-function CreateProduct(name, path){
-    this.name = name;
-    this.path = path;
-    this.timesShown = 0;
-    this.count = 0;
-    objects.push(this)
-}
+
 
 function generateNumbers(){
     randomNumbers = [];
