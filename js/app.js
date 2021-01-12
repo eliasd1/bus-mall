@@ -21,7 +21,6 @@ function CreateProduct(name, path){
 for(let i = 0; i<allImages.length;i++){
     new CreateProduct(allImages[i].split(".")[0].replace("-", " "), "img/" + allImages[i])
 }
-debugger;
 div.addEventListener("click", changeImages)
 button.addEventListener("click", showResults)
 generateNumbers()
