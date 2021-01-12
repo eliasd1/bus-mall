@@ -3,7 +3,7 @@
 var objects = []
 var randomNumbers = []
 var imageSelected = [];
-var trials = 5;
+var trials = 10;
 var numofImages = 3;
 var div = document.getElementById("imageList")
 var button = document.getElementById("results")
@@ -18,14 +18,28 @@ function CreateProduct(name, path){
     this.count = 0;
     objects.push(this)
 }
-for(let i = 0; i<allImages.length;i++){
-    new CreateProduct(allImages[i].split(".")[0].replace("-", " "), "img/" + allImages[i])
-}
-div.addEventListener("click", changeImages)
-button.addEventListener("click", showResults)
-generateNumbers()
-renderImages(randomNumbers)
 
+generateObjects();
+checkStorage()
+start()
+
+function start(){
+    div.addEventListener("click", changeImages)
+    button.addEventListener("click", showResults)
+    generateNumbers()
+    renderImages(randomNumbers)
+}
+
+function generateObjects(){
+    for(let i = 0; i<allImages.length;i++){
+        new CreateProduct(allImages[i].split(".")[0].replace("-", " "), "img/" + allImages[i])
+    }
+}
+function checkStorage(){
+    if(localStorage.length > 0){
+        objects = JSON.parse(localStorage.imageInfo)
+    }
+}
 function showResults(){
     for(let i = 0; i<objects.length; i++){
         var li = document.createElement("li");
@@ -33,7 +47,9 @@ function showResults(){
         ul.appendChild(li)
     }
     showChart();
-    button.style.display = "none"
+    button.textContent = "Clear All Data"
+    button.removeEventListener("click", showResults)
+    button.addEventListener("click", clearLocalStorage)
 }
 function showChart(){
     canvas.style.display = "inline-block"
@@ -75,6 +91,8 @@ function changeImages(event){
         generateNumbers()
         renderImages(randomNumbers)
         if(trials === 1){
+            localStorage.setItem("imageInfo", JSON.stringify(objects))
+            button.textContent = "View Results"
             button.style.display = "block"
         }
         trials--;
@@ -116,4 +134,8 @@ function getValue(selectedProperty){
         valueArr.push(objects[i][selectedProperty])
     }
     return valueArr;
+}
+function clearLocalStorage(){
+    localStorage.clear()
+    location.reload()
 }
