@@ -10,7 +10,7 @@ var button = document.getElementById("results")
 var ul = document.getElementById("resultList")
 var canvas = document.getElementById("myCanvas")
 var ctx = canvas.getContext("2d")
-var jpgs = ["bag", "banana", "bathroom", "boots", "breakfast", "bubblegum", "chair", "cthulhu", "dog-duck", "dragon", "pen", "pet-sweep", "scissors", "shark", "tauntaun", "unicorn", "water-can", "wine-glass"]
+var allImages = ["bag.jpg", "banana.jpg", "bathroom.jpg", "boots.jpg", "breakfast.jpg", "bubblegum.jpg", "chair.jpg", "cthulhu.jpg", "dog-duck.jpg", "dragon.jpg", "pen.jpg", "pet-sweep.jpg", "scissors.jpg", "shark.jpg", "sweep.png", "tauntaun.jpg", "unicorn.jpg", "usb.gif", "water-can.jpg", "wine-glass.jpg"]
 function CreateProduct(name, path){
     this.name = name;
     this.path = path;
@@ -18,12 +18,10 @@ function CreateProduct(name, path){
     this.count = 0;
     objects.push(this)
 }
-for(let i = 0; i<jpgs.length;i++){
-    new CreateProduct(jpgs[i].replace("-", " "), "img/" + jpgs[i] + ".jpg")
+for(let i = 0; i<allImages.length;i++){
+    new CreateProduct(allImages[i].split(".")[0].replace("-", " "), "img/" + allImages[i])
 }
-new CreateProduct("sweep", "img/sweep.png")
-new CreateProduct("usb", "img/usb.gif")
-
+debugger;
 div.addEventListener("click", changeImages)
 button.addEventListener("click", showResults)
 generateNumbers()
