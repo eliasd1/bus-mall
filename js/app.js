@@ -3,10 +3,11 @@
 var objects = []
 var randomNumbers = []
 var imageSelected = [];
-var trials = 10;
+var trials = 25;
 var numofImages = 3;
 var div = document.getElementById("imageList")
 var button = document.getElementById("results")
+var resetButton = document.getElementById("reset")
 var ul = document.getElementById("resultList")
 var canvas = document.getElementById("myCanvas")
 var ctx = canvas.getContext("2d")
@@ -26,6 +27,7 @@ start()
 function start(){
     div.addEventListener("click", changeImages)
     button.addEventListener("click", showResults)
+    resetButton.addEventListener("click", reset);
     generateNumbers()
     renderImages(randomNumbers)
 }
@@ -81,22 +83,25 @@ function showChart(){
 }
 function changeImages(event){
     if(trials !== 0){
-        for(let i = 0; i<objects.length; i++){
-            if(objects[i].name === event.target.alt){
-                objects[i].count++;
-                console.log("clicked " + event.target.alt)
-                break;
+        if(event.target.alt !== undefined){
+            for(let i = 0; i<objects.length; i++){
+                if(objects[i].name === event.target.alt){
+                    objects[i].count++;
+                    console.log("clicked " + event.target.alt)
+                    break;
+                }
             }
+            generateNumbers()
+            renderImages(randomNumbers)
+            if(trials === 1){
+                localStorage.setItem("imageInfo", JSON.stringify(objects))
+                button.textContent = "View Results"
+                resetButton.textContent = "Reset"
+                button.style.display = "inline"
+                resetButton.style.display = "inline"
+            }
+            trials--;
         }
-        generateNumbers()
-        renderImages(randomNumbers)
-        if(trials === 1){
-            localStorage.setItem("imageInfo", JSON.stringify(objects))
-            button.textContent = "View Results"
-            button.style.display = "block"
-        }
-        trials--;
-        
     } else{
         console.log("event listener removed")
         div.removeEventListener("click", changeImages)
@@ -124,7 +129,10 @@ function renderImages(numberArray){
     for(let i = 0; i<imgArray.length; i++){
         imgArray[i].setAttribute("src", objects[numberArray[i]].path)
         imgArray[i].setAttribute("alt", objects[numberArray[i]].name)
-        objects[numberArray[i]].timesShown++;
+        if(trials > 1){
+            objects[numberArray[i]].timesShown++;
+        }
+       
     }
 }
 
@@ -134,6 +142,16 @@ function getValue(selectedProperty){
         valueArr.push(objects[i][selectedProperty])
     }
     return valueArr;
+}
+function reset(){
+    button.removeEventListener("click", clearLocalStorage);
+    resetButton.removeEventListener("click", reset);
+    ul.innerHTML = "";
+    ctx.clearRect(0,0, canvas.width, canvas.height);
+    button.style.display = "none";
+    resetButton.style.display = "none";
+    trials = 25;
+    start()
 }
 function clearLocalStorage(){
     localStorage.clear()

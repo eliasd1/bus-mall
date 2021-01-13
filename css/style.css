@@ -1,41 +1,52 @@
 h1{
-    font-size:20px;
+    font-size:2em;
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
     margin:20px;
+    text-align: center;
 }
-
+#imageList{
+    width: 75%;
+    height:400px;
+    margin: 0 auto;
+}
 #imageList img{
-    width:200px;
-    height:200px;
-    margin: 20px;
+    width: 30%;
+    height:300px;
+    margin: 1.6%;
+    float:left;
 }
-
-#results{
+#view{
+    width:75%;
+    height: 500px;
+    margin:0 auto;
+    position:relative;
+}
+#results, #reset{
     display:none;
     border:0;
     margin:20px;
 }
-#results:hover{
+#results:hover, #reset:hover{
     background-color:lightgreen;
 }
-#results:focus{
+#results:focus, #reset:focus{
     outline: none;
 }
-#view{
-    position:relative;
-    width: 75%;
-}
 ul {
+    width:35%;
+    height: 100%;
     display: block;
-    position: absolute;
-    top: 50%;
-    left: 12.5%;
-    transform: translatey(25%);
+    position: relative;
+    top: 0;
+    left: 0;
 }
 #myCanvas{
+    width:65%;
+    height:100%;
     position:absolute;
-    left:50%
+    left:32.5%;
+    top:0;
 }
 
 
